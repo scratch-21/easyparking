@@ -35,6 +35,19 @@ spotController.viewAvailableSpots = (req, res, next) => {
 
 
 // View unavailable parking spaces
+spotController.viewUnavailableSpots = (req, res, next) => {
+  const currentTime = new Date();
+
+  let coercedDate = currentTime.toISOString().split('T')[0]+' '+currentTime.toTimeString().split(' ')[0]
+  // Find only available parkign spots
+  const queryStr = `SELECT * FROM "public"."ParkingSpace" where id_user IS NOT NULL OR expired_time > '${coercedDate}'`;
+  db.query(queryStr)
+  .then(data => {
+    res.locals.allSpots = data.rows
+    next();
+  })
+  .catch(err => next({err}))
+}
 
 
 // Create new parking spot

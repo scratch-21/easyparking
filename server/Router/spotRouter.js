@@ -20,6 +20,9 @@ router.get('/viewAvailableSpots', spotController.viewAvailableSpots, (req, res) 
 
 
 // View unavailable parking spaces
+router.get('/viewUnavailableSpots', spotController.viewUnavailableSpots, (req, res) => {
+  res.status(200).json(res.locals.allSpots)
+})
 
 
 // Create new parking space
