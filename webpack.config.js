@@ -24,5 +24,15 @@ module.exports = {
     rules
   },
 
-  
+  devServer: {
+    publicPath: '/build',
+    proxy: {
+      '/api': 'http://localhost:3000/'
+    },
+  }
+
+
+
+
+
 }
