@@ -11,18 +11,18 @@ spotController.viewAllSpots = (req, res, next) => {
   const queryStr = 'SELECT * FROM "public"."ParkingSpace"';
   db.query(queryStr)
   .then(data => {
-    res.locals.allSpots = data.rows[0]
+    res.locals.allSpots = data.rows
     next();
   })
   .catch(err => next({err}))
 
 }
 
-
 // View available parking spaces
 
 
 // View unavailable parking spaces
+
 
 // Create new parking spot
 spotController.createNewSpot = (req, res, next) => {
@@ -31,10 +31,11 @@ spotController.createNewSpot = (req, res, next) => {
   const {description} = req.body
 
   // Set default status and expired_time to "open" and date.now. 
-  const queryStr = `INSERT INTO "public"."ParkingSpace" (status, description, expired_time) VALUES ('open', ${description}, ${Date.now})`;
+  const queryStr = `INSERT INTO "public"."ParkingSpace" (status, description, expired_time) VALUES ('open', ${description}, ${Date.now()})`;
   db.query(queryStr)
   .then(data => {
-    res.locals.newSpot = data.rows[0]
+    console.log(data)
+    res.locals.newSpot = data.rows
     next();
   })
   .catch(err => next({err}))
