@@ -28,10 +28,10 @@ spotController.viewAllSpots = (req, res, next) => {
 spotController.createNewSpot = (req, res, next) => {
 
   // Store description in constants from req.body
-  const {description} = req.body
+  const {locationId} = req.body
 
   // Set default status and expired_time to "open" and date.now. 
-  const queryStr = `INSERT INTO "public"."ParkingSpace" (status, description, expired_time) VALUES ('open', ${description}, ${Date.now()})`;
+  const queryStr = `INSERT INTO "public"."ParkingSpace" (status, locationid, expired_time) VALUES ('open', ${locationId}, ${Date.now().toString()})`;
   db.query(queryStr)
   .then(data => {
     console.log(data)
@@ -47,10 +47,10 @@ spotController.createNewSpot = (req, res, next) => {
 spotController.deleteSpot = (req, res, next) => {
 
   // Store id of parking spot to be deleted
-  const {id} = req.body;
+  const {locationid} = req.body;
 
   // Delete parking lot associated with id
-  const queryStr = `DELETE FROM "public"."ParkingSpace" WHERE id = ${id}`;
+  const queryStr = `DELETE FROM "public"."ParkingSpace" WHERE locationid = ${locationid}`;
 
   db.query(queryStr)
   .then(data => {
