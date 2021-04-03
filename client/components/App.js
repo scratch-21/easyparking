@@ -10,7 +10,7 @@ class App extends Component {
     
     return(
       <div>
-        <p>I'm in React</p>
+        <p>I'm in React and I am live updating</p>
       </div>
     )
   }
