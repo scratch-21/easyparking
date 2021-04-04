@@ -11,6 +11,10 @@ router.post('/signup', userController.addUser, (req, res) => {
     res.status(200).send(res.locals.users);
 });
 
+router.post('/login', userController.login, (req, res) => {
+    res.status(200).send(res.locals.users);
+})
+
 
 
 

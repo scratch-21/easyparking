@@ -1,5 +1,5 @@
 const db = require('../Models/ParkingSpotModels');
-
+const bcrypt = require ('bcrypt');
 const userController = {};
 
 // Create a userController as middleware to pass it userRouter:
@@ -14,7 +14,6 @@ userController.addUser = (req, res, next) => {
         first_name,
         last_name,
         email,
-        password,
         id_role
     } = req.body;
 
@@ -22,7 +21,7 @@ userController.addUser = (req, res, next) => {
         first_name,
         last_name,
         email,
-        password,
+        res.locals.bcrypt, // this is the resulting hash after passing our password through bcrypt
         id_role
     ];
 
@@ -36,8 +35,43 @@ userController.addUser = (req, res, next) => {
             log: 'error',
             status: 500,
             // error: 
-            message: { error: err }
+            message: { err }
         }));
+}
+
+// bcrypt middleware:
+userController.bcrypt = (req, res, next) => {
+    // deconstruct password from the req.body
+    const { password } = req.body;
+    const saltRounds = 5;
+
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        // Store hash in database here
+        if (err) {
+            console.error(err);
+            return;
+          }
+          console.log(hash);
+        res.locals.bcrypt = hash;
+        next();
+    });
+}
+
+// login middleware: purpose is to check if the inputted password matches the password used when the user signed up
+userController.login = (req, res, next) => {
+    const { email, password } = req.body;
+    // Retrieve the hash (original password) of the user's stored password from the database:
+    const hash = `SELECT password FROM "public"."users" WHERE email = "${email}";`;
+    const inputtedPassword = password;
+    bcrypt.compare(inputtedPassword, hash, (err, result) => {
+        if (result) {
+            console.log('Login Successful!');
+            `SELECT email, first_name FROM "public"."users";`
+        } else {
+                // console.log('Invalid Password!');
+                return res.json('Email & password combination not found!');
+            } 
+    })
 }
 
 
