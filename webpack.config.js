@@ -38,12 +38,12 @@ module.exports = {
   devServer: {
     publicPath: '/build',
     proxy: {
-      '/api': 'http://localhost:3000/'
+      '/spot': {
+        target: 'http://localhost:3000/'
+      },
+      '/user': {
+        target: 'http://localhost:3000/'
+      }
     },
   }
-
-
-
-
-
 }

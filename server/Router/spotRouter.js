@@ -30,6 +30,15 @@ router.post('/newSpot', spotController.createNewSpot, (req, res) => {
   res.status(200).json(res.locals.newSpot)
 })
 
+// Check's in parking space user is going to use
+router.patch('/checkin', spotController.checkin, (req, res) => {
+  res.status(200).json(res.locals.spot)
+})
+
+// Check's out (frees) parking space user is going to use
+router.patch('/checkout', spotController.checkout, (req, res) => {
+  res.status(200).json(res.locals.spot)
+})
 
 // Delete parking space
 router.delete('/deleteSpot', spotController.deleteSpot, (req, res) => {
