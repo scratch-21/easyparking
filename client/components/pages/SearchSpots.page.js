@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from "../contexts/Auth.context";
-// import ItemsList from '../ItemsList';
+// import SpotList from '../SpotList';
 import Menu from '../layout/Menu.layout'
 
 const SearchSpotsPage = (props) => {
@@ -70,7 +70,7 @@ const SearchSpotsPage = (props) => {
             </div>
           </div>
           <div className="dashboard-main dashboard">
-          {/* <ItemsList data={items} onClick={handleClick}></ItemsList> */}
+          {/* <SpotList data={spots} onClick={handleClick}></ItemsList> */}
           
           </div>
         </div>
