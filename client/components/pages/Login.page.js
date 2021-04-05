@@ -1,21 +1,54 @@
 import React, { useState, useContext } from 'react';
-// import { useHistory, Link } from 'react-router-dom';
-// import { AuthContext } from '../contexts/Auth.context';
+import { useHistory, Link } from 'react-router-dom';
+import { AuthContext } from '../contexts/Auth.context';
 
 const LoginPage = () => {
+  const [login, setLogin] = useState();
 
+  const signinHandler = (e) => {
+		e.preventDefault();
+    // signin();
+    console.log("User Data: ", login);
+	}
+
+  const signin = () => {
+		fetch(`/user/login`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(login),
+		})
+		.then(response => response.json())
+		.then(data => {
+			setUser(data);
+      history.push({
+				pathname:`/dashboard`
+			});	
+		})
+  } 
   return (
     <div className="login-page text-center">
       <main className="form-signin">
-        <form>
-        <img className="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+        <form onSubmit={signinHandler}>
+          <img className="login-logo" src="/assets/scratch-logo.png" alt="" width="200" height="120" />
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
           <div className="form-floating">
-            <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+            <input
+              type="email"
+              className="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+              onChange={(e) => setLogin({ ...login, email: e.target.value })}
+            />
 
           </div>
           <div className="form-floating">
-            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
+            <input
+              type="password"
+              className="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+              onChange={(e) => setLogin({ ...login, password: e.target.value })}
+            />
 
           </div>
           <div className="checkbox mb-3">
