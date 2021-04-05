@@ -1,5 +1,6 @@
 const { response } = require('express');
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const db = require('./Models/ParkingSpotModels.js');
 
@@ -15,7 +16,6 @@ const userRouter = require('./Router/userRouter');
 const PORT = 3000;
 const app = express();
 
-
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -23,6 +23,8 @@ app.use(express.urlencoded({extended: true}));
 // Serve static file build route 
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
+//Enable Cors
+app.use(cors());
 
 // Initial Page Request
 app.get('/', (req, res) => {

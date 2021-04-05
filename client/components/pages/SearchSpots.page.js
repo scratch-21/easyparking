@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from "../contexts/Auth.context";
-// import SpotList from '../SpotList';
+
+import SpotList from '../SpotList';
 import Menu from '../layout/Menu.layout'
 
 const SearchSpotsPage = (props) => {
@@ -12,15 +13,11 @@ const SearchSpotsPage = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!user) {
-      history.push('/');
-      } else {      
-        fetch('/spot/viewAvailableSpots')
-        .then(response => response.json())
-        .then(spots => {
-          setSpots(spots);
-        });
-    }
+    fetch('/spot/viewAllSpots')
+    .then(response => response.json())
+    .then(spots => {
+      setSpots(spots);
+    });
 
 		return function cleanup() {
 			abortController.abort();
@@ -35,17 +32,23 @@ const SearchSpotsPage = (props) => {
   )};
 
   const searchHandler = () => {
-    fetch(`/items/${query}`)
+
+    fetch(`/spot/viewAvailableSpots`)
       .then(response => response.json())
-      .then(items => {
-        setItems(items);
+      .then(spots => {
+        setSpots(spots);
       });
   };
 
+  // Spot List. Only mount if spots data has been received
+  // const spots;
+  // if(spots.length>0) const spotList = <SpotList spots={spots} onClick={handleClick}></SpotList> 
+
+
 	return (
 		<div>	
-		<Menu/>
-      { user ? (
+ 		<Menu/> 
+      { spots.length > 0 ? (
       <div>      
         <div className="container">
           <div className="dashboard-bar dashboard">Spot Search</div>
@@ -70,7 +73,9 @@ const SearchSpotsPage = (props) => {
             </div>
           </div>
           <div className="dashboard-main dashboard">
-          {/* <SpotList data={spots} onClick={handleClick}></ItemsList> */}
+          <SpotList spots={spots} onClick={handleClick}></SpotList>
+            
+
           
           </div>
         </div>

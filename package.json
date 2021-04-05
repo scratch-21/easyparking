@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/scratch-21/easyparking#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "pg": "^8.5.1",
