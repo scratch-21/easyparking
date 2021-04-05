@@ -46,9 +46,4 @@ module.exports = {
       }
     },
   }
-
-
-
-
-
 }

@@ -19,9 +19,7 @@ function App() {
           <Route path='/search-spots'>
             <SearchSpots />
           </Route>
-          {/* <Route path='/test'>
-            <DetailPage />
-          </Route> */}
+
           <ul>
             <li>
               <Link to='/my-profile'>Profile</Link>
@@ -30,7 +28,7 @@ function App() {
               <Link to='/signup'>signup</Link>
             </li>
             <li>
-              <Link to='/search-spots'>test</Link>
+              <Link to='/search-spots'>Search Spots</Link>
             </li>
           </ul>
         </AuthContext.Provider>
