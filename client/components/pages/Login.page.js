@@ -19,6 +19,7 @@ const LoginPage = () => {
 		})
 		.then(response => response.json())
 		.then(data => {
+      console.log("signin: ",data);
 			setUser(data);
       history.push({
 				pathname:`/dashboard`

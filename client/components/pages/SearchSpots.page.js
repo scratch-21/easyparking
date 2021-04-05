@@ -12,15 +12,15 @@ const SearchSpotsPage = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!user) {
-      history.push('/');
-      } else {      
+    // if (!user) {
+    //   history.push('/');
+    //   } else {      
         fetch('/spot/viewAvailableSpots')
         .then(response => response.json())
         .then(spots => {
           setSpots(spots);
         });
-    }
+    // }
 
 		return function cleanup() {
 			abortController.abort();
@@ -35,10 +35,10 @@ const SearchSpotsPage = (props) => {
   )};
 
   const searchHandler = () => {
-    fetch(`/items/${query}`)
+    fetch(`/spot/${query}`)
       .then(response => response.json())
-      .then(items => {
-        setItems(items);
+      .then(spots => {
+        setSpots(spots);
       });
   };
 
