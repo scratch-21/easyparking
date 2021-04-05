@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from "../contexts/Auth.context";
+
 import SpotList from '../SpotList';
-// import Menu from '../layout/Menu.layout'
+import Menu from '../layout/Menu.layout'
 
 const SearchSpotsPage = (props) => {
 	const abortController = new AbortController();
@@ -12,17 +13,11 @@ const SearchSpotsPage = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log('in useeffect')
-    // if (!user) {
-    //   history.push('/');
-    //   } else {      
-        fetch('/spot/viewAllSpots')
-        .then(response => response.json())
-        .then(spots => {
-          console.log(spots)
-          setSpots(spots);
-        });
-    // }
+    fetch('/spot/viewAllSpots')
+    .then(response => response.json())
+    .then(spots => {
+      setSpots(spots);
+    });
 
 		return function cleanup() {
 			abortController.abort();
@@ -37,6 +32,7 @@ const SearchSpotsPage = (props) => {
   )};
 
   const searchHandler = () => {
+
     fetch(`/spot/viewAvailableSpots`)
       .then(response => response.json())
       .then(spots => {
@@ -51,7 +47,7 @@ const SearchSpotsPage = (props) => {
 
 	return (
 		<div>	
-		{/* <Menu/> */}
+ 		<Menu/> 
       { spots.length > 0 ? (
       <div>      
         <div className="container">
@@ -77,10 +73,9 @@ const SearchSpotsPage = (props) => {
             </div>
           </div>
           <div className="dashboard-main dashboard">
-
-            {/* Only mount once spots data is ready */}
-            <SpotList spots={spots} onClick={handleClick}></SpotList>
+          <SpotList spots={spots} onClick={handleClick}></SpotList>
             
+
           
           </div>
         </div>

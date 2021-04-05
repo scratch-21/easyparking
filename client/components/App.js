@@ -7,7 +7,6 @@ import SearchSpots from './pages/SearchSpots.page';
 import DetailPage from './pages/DetailSpot.page';
 import { AuthContext } from './contexts/Auth.context';
 
-
 function App() {
   const [user, setUser] = useState(null);
   const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
