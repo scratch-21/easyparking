@@ -33,9 +33,11 @@ app.get('/', (req, res) => {
 app.use('/spot', spotRouter); 
 app.use('/user', userRouter);
 
-app.get('/test', (req, res) => {
-  console.log(db);
-  let query = 'SELECT * FROM "public"."Roles"';
+// This was a test to check the database connection:
+
+// app.get('/test', (req, res) => {
+//   console.log(db);
+//   let query = 'SELECT * FROM "public"."Roles"';
   // db.query(query)
     // .then( data => {
     //   console.log(data);
@@ -44,11 +46,13 @@ app.get('/test', (req, res) => {
     // .catch(err => {
     //   // console.log(err);
     // })
-  db.query(query, [], (err, response) => {
-    if (err) console.log(err);
-      else res.json(response.rows);
-  })
-});
+  // db.query(query, [], (err, response) => {
+  //   if (err) console.log(err);
+  //     else res.json(response.rows);
+  // })
+// });
+
+// 
 
 // Global error handler
 app.use((err, req, res, next) => {
