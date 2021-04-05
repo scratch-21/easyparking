@@ -15,11 +15,11 @@ const SearchSpotsPage = (props) => {
     // if (!user) {
     //   history.push('/');
     //   } else {      
-        fetch('/spot/viewAvailableSpots')
-        .then(response => response.json())
-        .then(spots => {
-          setSpots(spots);
-        });
+        // fetch('/spot/viewAvailableSpots')
+        // .then(response => response.json())
+        // .then(spots => {
+        //   setSpots(spots);
+        // });
     // }
 
 		return function cleanup() {
