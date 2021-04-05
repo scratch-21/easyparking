@@ -115,7 +115,7 @@ spotController.checkin = (req, res, next) => {
 }
 
 // Create new parking spot
-spotController.checkin = (req, res, next) => {
+spotController.checkout = (req, res, next) => {
 
   // Store description in constants from req.body
   const { spotId , userId ,time } = req.body

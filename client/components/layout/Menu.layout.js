@@ -30,7 +30,9 @@ const Menu = (props) => {
             </li>
           </ul>
           <form className="d-flex">
+            {user ? (
             <div className="me-2">{user[0].first_name}</div>
+            ) : ('')}
             <Link className="btn btn-outline-success" to='/' onClick={logOut}>Log Out</Link>
           </form>
         </div>
