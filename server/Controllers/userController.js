@@ -11,30 +11,28 @@ userController.addUser = (req, res, next) => {
     VALUES ($1, $2, $3, $4, $5) RETURNING *`;
     // Deconstruct column names from req.body:
     const {
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
-        id_role
+        idRole
     } = req.body;
 
     const values = [
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
         res.locals.bcrypt, // this is the resulting hash after passing our password through bcrypt
-        id_role
+        idRole
     ];
 
     db.query(query, values)
         .then(data => { 
-            // console.log(data); 
             res.locals.users = data.rows;
             return next();
         })
         .catch( err => next({
             log: 'error',
-            status: 500,
-            // error: 
+            status: 500, 
             message: { err }
         }));
 }
@@ -51,7 +49,7 @@ userController.bcrypt = (req, res, next) => {
             console.error(err);
             return;
           }
-          console.log(hash);
+        //   console.log(hash);
         res.locals.bcrypt = hash;
         next();
     });
@@ -61,16 +59,31 @@ userController.bcrypt = (req, res, next) => {
 userController.login = (req, res, next) => {
     const { email, password } = req.body;
     // Retrieve the hash (original password) of the user's stored password from the database:
-    const hash = `SELECT password FROM "public"."users" WHERE email = "${email}";`;
+    const hash = `SELECT password FROM "public"."Users" WHERE email = '${email}';`;
+    db.query(hash)
+        .then(data => { 
+            if (data.rows.length === 0) {
+                res.status(400).json("Invalid: Email & password combination not found!");
+            }
+            res.locals.hash = data.rows[0].password;
+            compare();
+        });
+
     const inputtedPassword = password;
-    bcrypt.compare(inputtedPassword, hash, (err, result) => {
+    const compare = () => bcrypt.compare(inputtedPassword, res.locals.hash, (err, result) => {
         if (result) {
-            console.log('Login Successful!');
-            `SELECT email, first_name FROM "public"."users";`
-        } else {
-                // console.log('Invalid Password!');
-                return res.json('Email & password combination not found!');
-            } 
+            const query = `SELECT id, id_role, email, first_name FROM "public"."Users" WHERE email = '${email}';`;
+            db.query(query)
+            .then(data => { 
+                res.locals.users = data.rows;
+                return next();
+            })
+            .catch( err => next({
+                log: 'error',
+                status: 500,
+                message: { err }
+            }));
+        } else return res.json('Email & password combination not found!');
     })
 }
 
