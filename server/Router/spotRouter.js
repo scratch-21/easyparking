@@ -15,13 +15,13 @@ router.get('/viewAllSpots', spotController.viewAllSpots, (req, res) => {
 
 // View available parking spaces
 router.get('/viewAvailableSpots', spotController.viewAvailableSpots, (req, res) => {
-  res.status(200).json(res.locals.allSpots)
+  res.status(200).json(res.locals.availableSpots)
 })
 
 
 // View unavailable parking spaces
 router.get('/viewUnavailableSpots', spotController.viewUnavailableSpots, (req, res) => {
-  res.status(200).json(res.locals.allSpots)
+  res.status(200).json(res.locals.unavailableSpots)
 })
 
 

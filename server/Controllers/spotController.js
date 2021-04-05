@@ -27,7 +27,7 @@ spotController.viewAvailableSpots = (req, res, next) => {
   const queryStr = `SELECT * FROM "public"."ParkingSpace" where id_user IS NULL AND expired_time < '${coercedDate}'`;
   db.query(queryStr)
   .then(data => {
-    res.locals.allSpots = data.rows
+    res.locals.availableSpots = data.rows
     next();
   })
   .catch(err => next({err}))
@@ -43,7 +43,7 @@ spotController.viewUnavailableSpots = (req, res, next) => {
   const queryStr = `SELECT * FROM "public"."ParkingSpace" where id_user IS NOT NULL OR expired_time > '${coercedDate}'`;
   db.query(queryStr)
   .then(data => {
-    res.locals.allSpots = data.rows
+    res.locals.unavailableSpots = data.rows
     next();
   })
   .catch(err => next({err}))
