@@ -44,11 +44,6 @@ module.exports = {
       '/user': {
         target: 'http://localhost:3000/'
       }
-    }
+    },
   }
-
-
-
-
-
 }

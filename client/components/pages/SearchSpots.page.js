@@ -13,6 +13,8 @@ const SearchSpotsPage = (props) => {
   const history = useHistory();
 
   useEffect(() => {
+
+    if (!user) history.push('/');
     fetch('/spot/viewAllSpots')
     .then(response => response.json())
     .then(spots => {
@@ -23,6 +25,12 @@ const SearchSpotsPage = (props) => {
 			abortController.abort();
 		};
 	}, []);
+
+  useEffect(() => {
+    console.log("USER!!!", user);
+    if (!user) history.push('/');
+
+	});
 
   const handleClick = (spot) => {
     history.push({
@@ -48,7 +56,7 @@ const SearchSpotsPage = (props) => {
 	return (
 		<div>	
  		<Menu/> 
-      { spots.length > 0 ? (
+      { user ? (
       <div>      
         <div className="container">
           <div className="dashboard-bar dashboard">Spot Search</div>

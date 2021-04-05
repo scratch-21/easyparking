@@ -3,12 +3,13 @@ import { useHistory, Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/Auth.context';
 
 const LoginPage = () => {
+  const history = useHistory();
   const [login, setLogin] = useState();
+	const { user, setUser } = useContext(AuthContext);
 
   const signinHandler = (e) => {
 		e.preventDefault();
-    // signin();
-    console.log("User Data: ", login);
+    signin();
 	}
 
   const signin = () => {
@@ -19,9 +20,10 @@ const LoginPage = () => {
 		})
 		.then(response => response.json())
 		.then(data => {
+      console.log("signin: ",data);
 			setUser(data);
       history.push({
-				pathname:`/dashboard`
+				pathname:`/search-spots`
 			});	
 		})
   } 
