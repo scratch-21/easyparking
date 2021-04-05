@@ -92,5 +92,48 @@ spotController.deleteSpot = (req, res, next) => {
 
 }
 
+// Create new parking spot
+spotController.checkin = (req, res, next) => {
+
+  // Store description in constants from req.body
+  const { spotId , userId ,time } = req.body
+
+  // Coerced Date to work with SQL Timestamp type 
+  const d = new Date(); 
+  d.setHours(d.getHours + time); 
+  let coercedDate = d.toISOString().split('T')[0]+' '+d.toTimeString().split(' ')[0]
+  
+  // Set default status and expired_time to "open" and date.now. 
+  const queryStr = `UPDATE "public"."ParkingSpace" status = 'close', id_user =${userId}, expired_time = '${coercedDate}'`;
+  db.query(queryStr)
+  .then(data => {
+    res.locals.isUpdated = true;
+    next();
+  })
+  .catch(err => next({err}))
+
+}
+
+// Create new parking spot
+spotController.checkin = (req, res, next) => {
+
+  // Store description in constants from req.body
+  const { spotId , userId ,time } = req.body
+
+  // Coerced Date to work with SQL Timestamp type 
+  const d = new Date(); 
+  let coercedDate = d.toISOString().split('T')[0]+' '+d.toTimeString().split(' ')[0]
+  
+  // Set default status and expired_time to "open" and date.now. 
+  const queryStr = `UPDATE "public"."ParkingSpace" status = 'open', id_user = null, expired_time = '${coercedDate}'`;
+  db.query(queryStr)
+  .then(data => {
+    res.locals.isUpdated = true;
+    next();
+  })
+  .catch(err => next({err}))
+
+}
+
 
 module.exports = spotController;
