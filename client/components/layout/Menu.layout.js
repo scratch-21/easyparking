@@ -8,7 +8,7 @@ const Menu = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!user) history.push('/');
+    if (typeof user != 'object') history.push('/');
   });
 
   const logOut = () => {
@@ -23,7 +23,7 @@ const Menu = (props) => {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
             <li className="nav-item">
-              <Link className="nav-link" to='/search-spots'>Search For Parking</Link>
+              <Link className="nav-link" to='/my-profile'>Profile</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to='/search-spots'>Search For Parking</Link>
