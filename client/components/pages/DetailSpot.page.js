@@ -60,7 +60,6 @@ const DetailSpot = (props) => {
     <div>
 
       <Menu />
-      <div>hello</div>
       { spot ? (
         <div>
           <div className="container">
