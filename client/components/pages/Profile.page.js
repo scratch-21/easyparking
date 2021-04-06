@@ -30,7 +30,7 @@ const ProfilePage = (props) => {
         <label style = {{color: 'white', fontSize: 18}}>ID#: {user[0].id}</label>
         <label style = {{color: 'white', fontSize: 18}}>{user[0].role===1?'Administrator':'Customer'}</label>
       </div>
-      <div>
+      <div style = {{marginTop: 20}}>
         <button onClick = {() => updateModal()}>Disable User</button>
       </div>
       <div>
