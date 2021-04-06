@@ -4,18 +4,21 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import LoginPage from './pages/Login.page';
 import SignUpPage from './pages/SignUp.page';
 import SearchSpots from './pages/SearchSpots.page';
+import ProfilePage from './pages/Profile.page'
 // import DetailPage from './pages/DetailSpot.page';
 import { AuthContext } from './contexts/Auth.context';
 
 function App() {
   const [user, setUser] = useState(null);
   const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
+
   return (
     <div>
       <Router>
         <AuthContext.Provider value={providerUser}>
           <Route component={LoginPage} exact path="/" />
           <Route component={SignUpPage} exact path="/signup" />
+          <Route component={ProfilePage} exact path="/my-profile" />
           <Route path='/search-spots'>
             <SearchSpots />
           </Route>
