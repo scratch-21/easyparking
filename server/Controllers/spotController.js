@@ -24,7 +24,8 @@ spotController.viewAvailableSpots = (req, res, next) => {
 
   let coercedDate = currentTime.toISOString().split('T')[0]+' '+currentTime.toTimeString().split(' ')[0]
   // Find only available parkign spots
-  const queryStr = `SELECT * FROM "public"."ParkingSpace" where id_user IS NULL AND expired_time < '${coercedDate}'`;
+  // const queryStr = `SELECT * FROM "public"."ParkingSpace" where id_user IS NULL AND expired_time < '${coercedDate}'`;
+  const queryStr = `SELECT * FROM "public"."ParkingSpace" where status = 'open'`;
   db.query(queryStr)
   .then(data => {
     res.locals.availableSpots = data.rows
@@ -49,6 +50,19 @@ spotController.viewUnavailableSpots = (req, res, next) => {
   .catch(err => next({err}))
 }
 
+// View parking space by Id
+spotController.viewSpotById = (req, res, next) => {
+  const id = req.params.id;
+
+  // Find only available parkign spots
+  const queryStr = `SELECT * FROM "public"."ParkingSpace" where id = '${id}'`;
+  db.query(queryStr)
+  .then(data => {
+    res.locals.availableSpots = data.rows[0]
+    next();
+  })
+  .catch(err => next({err}))
+}
 
 // Create new parking spot
 spotController.createNewSpot = (req, res, next) => {
@@ -96,15 +110,18 @@ spotController.deleteSpot = (req, res, next) => {
 spotController.checkin = (req, res, next) => {
 
   // Store description in constants from req.body
-  const { spotId , userId ,time } = req.body
+
+  const { spotId , userId } = req.body
+  console.log("REQ BODY: ", req.body);
 
   // Coerced Date to work with SQL Timestamp type 
   const d = new Date(); 
-  d.setHours(d.getHours + time); 
+  // d.setHours(d.getHours + 1); 
   let coercedDate = d.toISOString().split('T')[0]+' '+d.toTimeString().split(' ')[0]
   
   // Set default status and expired_time to "open" and date.now. 
-  const queryStr = `UPDATE "public"."ParkingSpace" status = 'close', id_user =${userId}, expired_time = '${coercedDate}'`;
+  const queryStr = `UPDATE "public"."ParkingSpace" SET status = 'close', id_user =${userId}, expired_time = '${coercedDate}' where id = ${spotId}`;
+  console.log("Checkin ", queryStr);
   db.query(queryStr)
   .then(data => {
     res.locals.isUpdated = true;
@@ -118,14 +135,14 @@ spotController.checkin = (req, res, next) => {
 spotController.checkout = (req, res, next) => {
 
   // Store description in constants from req.body
-  const { spotId , userId ,time } = req.body
+  const { spotId } = req.body
 
   // Coerced Date to work with SQL Timestamp type 
   const d = new Date(); 
   let coercedDate = d.toISOString().split('T')[0]+' '+d.toTimeString().split(' ')[0]
   
   // Set default status and expired_time to "open" and date.now. 
-  const queryStr = `UPDATE "public"."ParkingSpace" status = 'open', id_user = null, expired_time = '${coercedDate}'`;
+  const queryStr = `UPDATE "public"."ParkingSpace" SET status = 'open', expired_time = '${coercedDate}' where id = ${spotId}`;
   db.query(queryStr)
   .then(data => {
     res.locals.isUpdated = true;
