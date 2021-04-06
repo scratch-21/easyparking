@@ -20,7 +20,7 @@ const LoginPage = () => {
 		})
 		.then(response => response.json())
 		.then(data => {
-      console.log("signin: ",data);
+      console.log("signin: ", user);
 			setUser(data);
       history.push({
 				pathname:`/search-spots`

@@ -24,6 +24,10 @@ router.get('/viewUnavailableSpots', spotController.viewUnavailableSpots, (req, r
   res.status(200).json(res.locals.unavailableSpots)
 })
 
+// View all parking spaces
+router.get('/viewSpot/:id', spotController.viewSpotById, (req, res) => {
+  res.status(200).json(res.locals.spot);
+})
 
 // Create new parking space
 router.post('/newSpot', spotController.createNewSpot, (req, res) => {
@@ -32,12 +36,12 @@ router.post('/newSpot', spotController.createNewSpot, (req, res) => {
 
 // Check's in parking space user is going to use
 router.patch('/checkin', spotController.checkin, (req, res) => {
-  res.status(200).json(res.locals.spot)
+  res.status(200).json({msg : "It worked"})
 })
 
 // Check's out (frees) parking space user is going to use
 router.patch('/checkout', spotController.checkout, (req, res) => {
-  res.status(200).json(res.locals.spot)
+  res.status(200).json({msg : "It worked"})
 })
 
 // Delete parking space

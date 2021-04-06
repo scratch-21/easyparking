@@ -15,7 +15,7 @@ const SearchSpotsPage = (props) => {
   useEffect(() => {
 
     if (!user) history.push('/');
-    fetch('/spot/viewAllSpots')
+    fetch(`/spot/viewAvailableSpots`)
     .then(response => response.json())
     .then(spots => {
       setSpots(spots);
@@ -33,21 +33,29 @@ const SearchSpotsPage = (props) => {
 	});
 
   const handleClick = (spot) => {
+    // e.preventDefault();
     history.push({
-      pathname:`/spot/${spot._id}`,
+      pathname:`/spot-detail`,
       state: { spot: spot } //Passes the spot inside location.state.item
-    }
-  )};
+    })
+  };
 
   const searchHandler = () => {
 
-    fetch(`/spot/viewAvailableSpots`)
+    fetch('/spot/viewAllSpots')
       .then(response => response.json())
       .then(spots => {
         setSpots(spots);
       });
   };
 
+  const searchavailableHandler = () => {
+    fetch(`/spot/viewAvailableSpots`)
+    .then(response => response.json())
+    .then(spots => {
+      setSpots(spots);
+    });
+  };
   // Spot List. Only mount if spots data has been received
   // const spots;
   // if(spots.length>0) const spotList = <SpotList spots={spots} onClick={handleClick}></SpotList> 
@@ -62,16 +70,9 @@ const SearchSpotsPage = (props) => {
           <div className="dashboard-bar dashboard">Spot Search</div>
           <div className="row search-item">
             <div className="col-3">
-              <input 
-                type="text" 
-                className="form-control" 
-                id="exampleFormControlInput3" 
-                value={query} 
-                onChange={(e) => setQuery(e.target.value)}
-                >
-              </input>
             </div>
-              <a className="btn btn-primary" href="#" role="button" onClick={searchHandler}>Search</a> 
+              <a className="btn btn-primary" href="#" role="button" onClick={searchHandler}>View All</a> 
+              <a className="btn btn-primary" href="#" role="button" onClick={searchavailableHandler}>View Available</a> 
             <div className="col-3">
             </div>
             <div className="col-2">
