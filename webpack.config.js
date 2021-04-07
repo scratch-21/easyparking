@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 const rules = [{
   test: /\.(js|jsx|ts)$/,
@@ -34,6 +35,12 @@ module.exports = {
   module: {
     rules
   },
+
+  plugins: [
+    new Dotenv({
+      path: './.env'
+    })
+  ],
 
   devServer: {
     publicPath: '/build',
