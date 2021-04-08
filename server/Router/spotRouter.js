@@ -49,6 +49,11 @@ router.delete('/deleteSpot', spotController.deleteSpot, (req, res) => {
   res.status(200).json('Delete Successful')
 })
 
+// ADMIN Create New Spot
+router.post('/adminCreateSpot', spotController.adminCreateNewSpot, (req, res) => {
+  res.status(200).json(res.locals.newSpot)
+})
+
 
 // Test Area
 router.get('/test', (req, res,) => {

@@ -12,6 +12,7 @@ const DetailSpot = (props) => {
   const location = useLocation();
 
   useEffect(() => {
+    console.log('DetailSpotPage:' , location.state.spots)
     if (!user) history.push('/');
     if (location.state.spot) {
       setSpot(location.state.spot);

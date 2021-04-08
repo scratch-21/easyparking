@@ -8,13 +8,14 @@ import EasyGoogleMap from '../layout/GoogleMap.layout'
 
 const SearchSpotsPage = (props) => {
 	const abortController = new AbortController();
-  const { user, setUser} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
+
 	const [spots, setSpots] = useState([]);
 	const [query, setQuery] = useState('');
   const history = useHistory();
 
   useEffect(() => {
-
+    console.log('api: ', process.env.REACT_APP_GOOGLE_MAP_KEY)
     if (!user) history.push('/');
     fetch(`/spot/viewAvailableSpots`)
     .then(response => response.json())

@@ -25,7 +25,7 @@
   "homepage": "https://github.com/scratch-21/easyparking#readme",
   "dependencies": {
     "@react-google-maps/api": "^2.1.1",
-    "bcrypt": "^5.0.1",
+    "bcrypt": "5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
