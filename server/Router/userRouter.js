@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 // Controllers
 const userController = require('../Controllers/userController');
@@ -21,4 +22,25 @@ router.get('/profile/:email', userController.profile, (req, res) => {
 router.patch('/profile/:email', userController.bcrypt, userController.updateInfo, (req, res) => {
     res.status(200).send(res.locals.users);
 })
+
+
+/******************************
+ * ****GOOGLE ROUTES************************8 */
+//  router.get('/auth/google',
+//  passport.authenticate('google', { scope: ['profile'] }));
+
+//  router.get('/auth/google/oauthtg', 
+//  passport.authenticate('google', { failureRedirect: '/login' }),
+//  function(req, res) {
+//    // Successful authentication, redirect home.
+//    console.log("'/auth/google/oauthtg!!!!");
+//    res.redirect('/');
+//  });
+ 
+
+
+
+
+/******************************
+ * *********************************8 */
 module.exports = router;
