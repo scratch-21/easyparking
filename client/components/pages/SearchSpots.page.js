@@ -7,7 +7,8 @@ import Menu from '../layout/Menu.layout'
 
 const SearchSpotsPage = (props) => {
 	const abortController = new AbortController();
-  const { user, setUser} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
+
 	const [spots, setSpots] = useState([]);
 	const [query, setQuery] = useState('');
   const history = useHistory();
