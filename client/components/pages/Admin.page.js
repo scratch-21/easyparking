@@ -55,7 +55,7 @@ const AdminPage = (props) => {
     };
   }, []);
 
-  // handle click event (Add Spot) => POST request
+  // Handle click event (Add Spot) => POST request
   const addSpotHandler = (e) => {
     const body = {
       pt_name,
@@ -65,6 +65,7 @@ const AdminPage = (props) => {
       pt_loc_desc
     }
     console.log('this is body', body);
+    // Making a post request to store the spot information
     fetch('/spot/adminCreateSpot', {
       method: 'POST',
       headers: {'Content-Type': 'Application/JSON'},
@@ -75,11 +76,10 @@ const AdminPage = (props) => {
       console.log(data);
     })
     .catch(err => console.log('Admin create spot err:', err))
-
-
     e.preventDefault();
   }
 
+  // Handle click event (Delete Spot) => POST request
   const deleteSpotHandler = (e) => {
 
   }
@@ -91,8 +91,6 @@ const AdminPage = (props) => {
       state: { spot: spot } //Passes the spot inside location.state.item
     })
   };
-
-
 
   return (
     //Add HTML buttons, long, lat input here
@@ -109,24 +107,24 @@ const AdminPage = (props) => {
               <form onSubmit={addSpotHandler}>
                 <label>
                   {/* PARKING TYPE INPUT INFO */}
-                  Parking Type Name:
+                  Parking Type Name:<br />
                   <input type="text" name="name" onChange={handlePtNameChange}></input>
                 </label>
                 <label>
-                  Parking Type Description:
+                  Parking Type Description:<br />
                   <input type="text" name="description" onChange={handlePtDescChange}></input>
                 </label>
                 <label>
                   {/* LOCATION INPUT INFO */}
-                  Longitude:
+                  Longitude:<br />
                   <input type="text" name="log" onChange={handlePtLogChange}></input>
                 </label>
                 <label>
-                  Latitude:
+                  Latitude:<br />
                   <input type="text" name="lat" onChange={handlePtLatChange}></input>
                 </label>
                 <label>
-                  Location Description:
+                  Location Description:<br />
                   <input type="text" name="description" onChange={handlePtLocDescChange}></input>   
                 </label>
                 {/* <input type="submit" className="btn btn-primary" href="#" role="button" onClick={addSpotHandler}>Add Spot</input> */}
@@ -136,7 +134,6 @@ const AdminPage = (props) => {
             </div>
             <div className="col-2">
             </div>
-
             <div className="col-4">
             </div>
           </div>

@@ -173,7 +173,7 @@ spotController.adminCreateNewSpot = (req, res, next) => {
   // const queryStr = `INSERT INTO "public"."Locations" (log, lat, description) VALUES (${pt_log}, ${pt_lat}, '${pt_loc_desc}'); 
   //                   INSERT INTO "public"."ParkingSpace" (status, expired_time, id_parking_type) VALUES ('OPEN', '${coercedDate}', ${pt_name});`;
   
-  //Call SQL procedure in query to automatically create a new location and parking spot entry
+  //Call SQL stored procedure in query to automatically create a new location and parking spot entry
   const queryStr = `CALL add_new_spot(${pt_name}, ${pt_log}, ${pt_lat}, '${pt_loc_desc}', TIMESTAMP '${coercedDate}');`
   
   db.query(queryStr)
