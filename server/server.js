@@ -3,10 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./Models/ParkingSpotModels.js');
-
-// Controllers
-const userController = require('./Controllers/userController');
-const spotController = require('./Controllers/spotController');
+const passport = require('passport');
+require('./Config/passport-setup');
 
 // Routes
 const spotRouter = require('./Router/spotRouter');
@@ -20,11 +18,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use(passport.initialize());
+// app.use(passport.session());
+
 // Serve static file build route 
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
 //Enable Cors
 app.use(cors());
+
 
 // Initial Page Request
 app.get('/', (req, res) => {
@@ -34,6 +36,26 @@ app.get('/', (req, res) => {
 // Re-direct to route handlers:
 app.use('/spot', spotRouter); 
 app.use('/user', userRouter);
+
+/******************************
+ * ****GOOGLE ROUTES************************8 */
+ app.get('/auth/google',
+ passport.authenticate('google', { scope: ['profile'] }));
+
+ app.get('/auth/google/oauthtg', 
+ passport.authenticate('google', { failureRedirect: '/' }),
+ function(req, res) {
+   // Successful authentication, redirect home.
+   console.log("'/auth/google/oauthtg!!!!");
+   res.redirect('/');
+ });
+ 
+
+
+
+
+/******************************
+ * *********************************8 */
 
 // This was a test to check the database connection:
 
