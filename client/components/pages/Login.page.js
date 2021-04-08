@@ -5,28 +5,28 @@ import { AuthContext } from '../contexts/Auth.context';
 const LoginPage = () => {
   const history = useHistory();
   const [login, setLogin] = useState();
-	const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const signinHandler = (e) => {
-		e.preventDefault();
+    e.preventDefault();
     signin();
-	}
+  }
 
   const signin = () => {
-		fetch(`/user/login`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(login),
-		})
-		.then(response => response.json())
-		.then(data => {
-      console.log("signin: ", user);
-			setUser(data);
-      history.push({
-				pathname:`/search-spots`
-			});	
-		})
-  } 
+    fetch(`/user/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(login),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("signin: ", user);
+        setUser(data);
+        history.push({
+          pathname: `/search-spots`
+        });
+      })
+  }
   return (
     <div className="login-page text-center">
       <main className="form-signin">
@@ -54,13 +54,36 @@ const LoginPage = () => {
 
           </div>
           <div className="checkbox mb-3">
-              <Link to='/signup'>Create Account</Link>
+            {/* Sign In with Google */}
+            <div className="col-sm-4">
+              <div className="card">
+                <div className="card-body">
+                  {/* href makes a request to the following path-->change as needed */}
+                  <a className="btn btn-block btn-social btn-google" href="auth/google" role="button">
+                    <i className="fab fa-google"></i>
+                    {/* Sign In with Google */}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <Link to='/signup'>Create Account</Link>
+            <div className="col-sm-4">
+              <div className="card">
+                {/* Sign Up with Google */}
+                {/* href makes a request to the following path-->change as needed */}
+                <a className="btn btn-block btn-social btn-google" href="auth/google" role="button">
+                  <i className="fab fa-google"></i>
+                  {/* Sign Up with Google */}
+                </a>
+            </div>
           </div>
-          <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-          <p className="mt-5 mb-3 text-muted">© 2017–2021</p>
+          </div>
+        <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <p className="mt-5 mb-3 text-muted">© 2017–2021</p>
         </form>
       </main>
-    </div>
+    </div >
   );
 };
 export default LoginPage;
