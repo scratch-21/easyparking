@@ -21,7 +21,7 @@ passport.use(new GoogleStrategy({
   // userProfileURL: "http://www.googleapis.com/oauth2/v3/userinfo"
 },
 function(accessToken, refreshToken, profile, done) {
-    console.log('Google function' , profile);
+    console.log('Google function' , profile.name, profile.emails);
   // User.findOrCreate({ googleId: profile.id }, function (err, user) {
   //   return done(err, user);
   // })

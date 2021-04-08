@@ -45,7 +45,7 @@ app.use('/user', userRouter);
 /******************************
  * ****GOOGLE ROUTES************************8 */
  app.get('/auth/google',
- passport.authenticate('google', { scope: ['profile'] }));
+ passport.authenticate('google', { scope: ['profile','email'] }));
 
  app.get('/auth/google/oauthtg', 
  passport.authenticate('google', { failureRedirect: '/' }),
