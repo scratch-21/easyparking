@@ -1,6 +1,6 @@
 # Dependency directories
 node_modules/
 
-.env
+server/Config/
 
-server/Config/passport-setup.js
+.env
