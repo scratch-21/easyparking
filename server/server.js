@@ -4,12 +4,13 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./Models/ParkingSpotModels.js');
 const passport = require('passport');
-require('./Config/passport-setup');
 
 
 //Allows to read .env file 
-require('dotenv').config();
+require('dotenv').config(); 
+// console.log("Env: ", process.env);
 
+require('./Config/passport-setup');
 // Routes
 const spotRouter = require('./Router/spotRouter');
 const userRouter = require('./Router/userRouter');
