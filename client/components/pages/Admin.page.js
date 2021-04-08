@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/Auth.context';
 
 import Menu from '../layout/Menu.layout'
 import SpotList from '../SpotList';
+import EasyGoogleMap from '../layout/GoogleMap.layout';
 
 // check if the user is admin and logged in 
 const AdminPage = (props) => {
@@ -38,18 +39,30 @@ const AdminPage = (props) => {
     setPtLocDesc(event.target.value);
   }
   
+  const handleGetLog = (spot) => {
+    console.log(spot);
+    setPtLat(spot.x);
+    setPtLog(spot.y);
+  }
+
+  const mapCheckIn = () => {
+
+  }
+
+  const showAllSpots = () => {
+    fetch(`/spot/viewAllSpots`)
+    .then(response => response.json())
+    .then(spots => {
+      console.log('Loading spots:' ,spots);
+      setSpots(spots);
+    });
+  }
 
   //Check if user is admin, if not redirect to root.
   //TODO: Make admin check more secure. id_role is able to be edited in browser
   useEffect(() => {
     if (user[0].id_role !== 2) history.push('/');
-
-    fetch(`/spot/viewAvailableSpots`)
-    .then(response => response.json())
-    .then(spots => {
-      setSpots(spots);
-    });
-
+    showAllSpots();
     return function cleanup() {
       abortController.abort();
     };
@@ -74,6 +87,7 @@ const AdminPage = (props) => {
     .then(res => res.json())
     .then(data => {
       console.log(data);
+      showAllSpots();
     })
     .catch(err => console.log('Admin create spot err:', err))
     e.preventDefault();
@@ -86,11 +100,13 @@ const AdminPage = (props) => {
 
   const handleClick = (spot) => {
     // e.preventDefault();
+    console.log('handleClick event: ', spot)
     history.push({
       pathname:`/spot-detail`,
       state: { spot: spot } //Passes the spot inside location.state.item
     })
   };
+
 
   return (
     //Add HTML buttons, long, lat input here
@@ -108,6 +124,7 @@ const AdminPage = (props) => {
                 <label>
                   {/* PARKING TYPE INPUT INFO */}
                   Parking Type Name:<br />
+                  <input type="select" name="name"></input>
                   <input type="text" name="name" onChange={handlePtNameChange}></input>
                 </label>
                 <label>
@@ -117,11 +134,11 @@ const AdminPage = (props) => {
                 <label>
                   {/* LOCATION INPUT INFO */}
                   Longitude:<br />
-                  <input type="text" name="log" onChange={handlePtLogChange}></input>
+                  <input type="text" name="log" onChange={handlePtLogChange} value={pt_log}></input>
                 </label>
                 <label>
                   Latitude:<br />
-                  <input type="text" name="lat" onChange={handlePtLatChange}></input>
+                  <input type="text" name="lat" onChange={handlePtLatChange} value={pt_lat}></input>
                 </label>
                 <label>
                   Location Description:<br />
@@ -133,6 +150,7 @@ const AdminPage = (props) => {
               <a className="btn btn-primary" href="#" role="button" onClick={deleteSpotHandler}>Delete Spot</a>             
             </div>
             <div className="col-2">
+              <EasyGoogleMap spots={[]} getSpotInfo={mapCheckIn} getMapLocation={handleGetLog} admin={true}/>
             </div>
             <div className="col-4">
             </div>

@@ -15,7 +15,7 @@ const SearchSpotsPage = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-
+    console.log('api: ', process.env.REACT_APP_GOOGLE_MAP_KEY)
     if (!user) history.push('/');
     fetch(`/spot/viewAvailableSpots`)
     .then(response => response.json())

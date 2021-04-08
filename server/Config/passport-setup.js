@@ -14,7 +14,8 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new GoogleStrategy({
-
+  clientID: '922686415088-60il0f0afrk9ms34kui6dn5h7tqkf5aq.apps.googleusercontent.com',
+  clientSecret: '1bpM7ESjOszLhcflx8VlB54Y',
   callbackURL: "/auth/google/oauthtg",
   //possibly not needed
   // userProfileURL: "http://www.googleapis.com/oauth2/v3/userinfo"
