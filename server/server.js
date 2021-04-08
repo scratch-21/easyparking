@@ -6,6 +6,10 @@ const db = require('./Models/ParkingSpotModels.js');
 const passport = require('passport');
 require('./Config/passport-setup');
 
+
+//Allows to read .env file 
+require('dotenv').config();
+
 // Routes
 const spotRouter = require('./Router/spotRouter');
 const userRouter = require('./Router/userRouter');
