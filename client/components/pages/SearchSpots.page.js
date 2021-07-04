@@ -4,16 +4,18 @@ import { AuthContext } from "../contexts/Auth.context";
 
 import SpotList from '../SpotList';
 import Menu from '../layout/Menu.layout'
+import EasyGoogleMap from '../layout/GoogleMap.layout'
 
 const SearchSpotsPage = (props) => {
 	const abortController = new AbortController();
-  const { user, setUser} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
+
 	const [spots, setSpots] = useState([]);
 	const [query, setQuery] = useState('');
   const history = useHistory();
 
   useEffect(() => {
-
+    console.log('api: ', process.env.REACT_APP_GOOGLE_MAP_KEY)
     if (!user) history.push('/');
     fetch(`/spot/viewAvailableSpots`)
     .then(response => response.json())
@@ -60,6 +62,17 @@ const SearchSpotsPage = (props) => {
   // const spots;
   // if(spots.length>0) const spotList = <SpotList spots={spots} onClick={handleClick}></SpotList> 
 
+  const mapCheckIn = (spot) => {
+    // Save Check in
+    // refresh available spots
+    console.log("mapCheckIn: ", spot);
+  }
+
+  const getMapLocation = (spot) => {
+    // Get lat and log
+    //set state
+    console.log("Get Map Location: ", spot);
+  }
 
 	return (
 		<div>	
@@ -82,6 +95,7 @@ const SearchSpotsPage = (props) => {
             </div>
           </div>
           <div className="dashboard-main dashboard">
+          <EasyGoogleMap spots={spots} getSpotInfo={mapCheckIn} getMapLocation={getMapLocation} admin={true}/>
           <SpotList spots={spots} onClick={handleClick}></SpotList>
             
 

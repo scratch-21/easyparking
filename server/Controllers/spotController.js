@@ -106,7 +106,7 @@ spotController.deleteSpot = (req, res, next) => {
 
 }
 
-// Create new parking spot
+// Checkin to available parking spot
 spotController.checkin = (req, res, next) => {
 
   // Store description in constants from req.body
@@ -131,7 +131,7 @@ spotController.checkin = (req, res, next) => {
 
 }
 
-// Create new parking spot
+// Checkout fronm the current spot
 spotController.checkout = (req, res, next) => {
 
   // Store description in constants from req.body
@@ -151,6 +151,41 @@ spotController.checkout = (req, res, next) => {
   .catch(err => next({err}))
 
 }
+
+
+spotController.adminCreateNewSpot = (req, res, next) => {
+
+  // Store description in constants from req.body
+  const { 
+    pt_name,
+    pt_type_desc,
+    pt_log,
+    pt_lat,
+    pt_loc_desc
+  } = req.body
+
+  // Coerced Date to work with SQL Timestamp type 
+  const d = new Date(); 
+  let coercedDate = d.toISOString().split('T')[0]+' '+d.toTimeString().split(' ')[0]
+  
+  console.log('WE REACHED ADMIN CREATE NEW SPOT IN SPOT CONTROLLER')
+  // Set default status and expired_time to "open" and date.now. 
+  // const queryStr = `INSERT INTO "public"."Locations" (log, lat, description) VALUES (${pt_log}, ${pt_lat}, '${pt_loc_desc}'); 
+  //                   INSERT INTO "public"."ParkingSpace" (status, expired_time, id_parking_type) VALUES ('OPEN', '${coercedDate}', ${pt_name});`;
+  
+  //Call SQL stored procedure in query to automatically create a new location and parking spot entry
+  const queryStr = `CALL add_new_spot(${pt_name}, ${pt_log}, ${pt_lat}, '${pt_loc_desc}', TIMESTAMP '${coercedDate}');`
+  
+  db.query(queryStr)
+  .then(data => {
+    console.log(data)
+    res.locals.newSpot = data.rows
+    next();
+  })
+  .catch(err => next({err}))
+
+}
+
 
 
 module.exports = spotController;
